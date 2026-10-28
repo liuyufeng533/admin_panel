@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw'
+import { http, HttpResponse,passthrough } from 'msw'
 
 let users = [
   {
@@ -29,6 +29,9 @@ let users = [
 
 
 export const handlers = [
+
+  http. get ( '/admin_panel/' , () => { return passthrough ()
+  }),
 
   http.get('/users', ({ request }) => {
     const url = new URL(request.url)
