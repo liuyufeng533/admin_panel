@@ -13,11 +13,14 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { createPinia } from 'pinia'
 
 async function bootstrap() {
-  const { worker } = await import('./mocks/browser')
-  await worker.start({
-    serviceWorker : { url : import . meta . env . BASE_URL + 'mockServiceWorker.js' }
-  })
-
+  try {
+    const { worker } = await import('./mocks/browser')
+    await worker.start({
+      serviceWorker : { url : import . meta . env . BASE_URL + 'mockServiceWorker.js' }
+    })
+  }catch(err) {
+    console . warn ( 'MSW 启动失败，但应用继续运行:' , err)
+  }
   const app = createApp(App)
   const pinia = createPinia()
   app.use(router)
