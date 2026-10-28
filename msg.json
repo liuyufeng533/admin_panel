@@ -1,0 +1,57 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": [
+    {
+      "name": "typicode",
+      "id": "yKAETHMFhw0"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "account": 123456,
+      "password": "admin1",
+      "email": "zhangsan@xx.com",
+      "avatar": "这是我的头像",
+      "name": "张三",
+      "sex": "男",
+      "role": "管理员",
+      "department": "生产部门",
+      "token": "jdoaw381391adad"
+    },
+    {
+      "id": "2",
+      "account": 111111,
+      "password": "admin2",
+      "email": "lisi@xx.com"
+    },
+    {
+      "account": 222222,
+      "password": "admin2",
+      "email": "lisi@xx.com",
+      "id": "9tLqHDYk2KM",
+      "name": "dad",
+      "sex": "da"
+    },
+    {
+      "account": 333333,
+      "password": "admin1",
+      "email": "2736126509@qq.com",
+      "id": "jhR8QZuI-lg"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
