@@ -9,7 +9,7 @@
                 <el-icon><House /></el-icon>
                 <span>首页</span>
             </el-menu-item>
-            <el-menu-item index="2">
+            <el-menu-item index="systemoverview">
                 <el-icon><Document /></el-icon>
                 <span>系统概览</span>
             </el-menu-item>
@@ -75,13 +75,12 @@
           <div class="header-left-content">尊敬的{{userinfoStore.name ?? userinfoStore.id}}欢迎您的登录</div>
           <div class="header-right-content">
             <el-icon><Message /></el-icon>
-            <el-avatar :size="24" :src="circleUrl" />
+            <img :src="userinfoStore.avatar" class="avatarImg">
             <el-dropdown placement="bottom">
               <span class="settings">设置</span>
               <template #dropdown>
                 <el-dropdown-menu>
                   <el-dropdown-item>设置账号</el-dropdown-item>
-                  <el-dropdown-item>更改头像</el-dropdown-item>
                   <el-dropdown-item @click="goLogin">退出登录</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
@@ -105,7 +104,7 @@
 
 <script lang="ts" setup>
   import { RouterView, useRouter } from 'vue-router'
-  import { onMounted, reactive,toRefs } from 'vue'
+  import { onMounted } from 'vue'
   import { useUserinfoStore } from '@/store/userinfo';
 
   const userinfoStore = useUserinfoStore()
@@ -115,10 +114,6 @@
       menuRoute.push({ name: 'home' })
   }
   })
-  const state = reactive({
-    circleUrl: 'https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png'
-  })
-  const {circleUrl} = toRefs(state)
   function goLogin() {
     localStorage.removeItem('token')
     menuRoute.replace({name: 'login'})
@@ -241,6 +236,14 @@
   color: #333;
   border-bottom: 1px solid #e8e8e8;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+
+  .avatarImg {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 }
 
 .header-right-content {

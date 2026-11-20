@@ -1,6 +1,6 @@
 <template>
   <div class="common-layout">
-    <el-container>
+    <el-container class="login-layout">
       <el-header class="header-wrapped">
         <div class="header wth">
           <h3>后台管理系统</h3>
@@ -48,9 +48,10 @@
           </el-card>
         </div>
       </el-main>
+      <el-footer class="login-tip">账号：admin<br/>密码：123456</el-footer>
     </el-container>
+    <ForgetpPassword ref="forgetpassword"/>
   </div>
-  <ForgetpPassword ref="forgetpassword"/>
 </template>
 
 <script lang="ts">
@@ -120,7 +121,7 @@
       ElMessage.error('登录失败，请检查网络')
     }
   }
-  //注册
+    //注册
     const handleRegister = async () => {
     const accountStr = registerData.account.trim()
     const email = registerData.email ?? ''
@@ -218,61 +219,66 @@
   }
 
   .login-wrapped {
-  height: 500px;
+    height: 500px;
 
-  .box-card {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    float: right;
-    width: 350px;
-    height: 375px;
+    .box-card {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      float: right;
+      width: 350px;
+      height: 375px;
 
-    :deep(.el-card__body) {
-      height: 100%;
-      box-sizing: border-box;
-      padding: 20px;
-    }
-
-    :deep(.el-tabs__content) {
-      padding-top: 10px;
-    }
-
-    :deep(.el-tab-pane) {
-      .footer {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end; 
-        gap: 20px;
-        margin-top: 16px;
+      :deep(.el-card__body) {
+        height: 100%;
+        box-sizing: border-box;
+        padding: 20px;
       }
 
-      .forget-password {
-        font-size: 12px;
-        color: #409eff;
-        cursor: pointer;
+      :deep(.el-tabs__content) {
+        padding-top: 10px;
       }
 
-      .el-button {
-        margin-top: 10px;
-        width: 100%;
-      }
+      :deep(.el-tab-pane) {
+        .footer {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end; 
+          gap: 20px;
+          margin-top: 16px;
+        }
 
-      .footer-go-register {
-        margin-top: 10px;
-        text-align: center;
-        width: 100%;
-        font-size: 13px;
-
-        span {
+        .forget-password {
+          font-size: 12px;
           color: #409eff;
           cursor: pointer;
         }
+
+        .el-button {
+          margin-top: 10px;
+          width: 100%;
+        }
+
+        .footer-go-register {
+          margin-top: 10px;
+          text-align: center;
+          width: 100%;
+          font-size: 13px;
+
+          span {
+            color: #409eff;
+            cursor: pointer;
+          }
+        }
+      }
+      :deep(.el-form-item__label) {
+        font-size: 14px;
       }
     }
-    :deep(.el-form-item__label) {
-      font-size: 14px;
-    }
   }
-}
+  .login-tip {
+    font-size: 14px;
+    color: #409eff;
+    margin: 0 auto;
+  }
 </style>

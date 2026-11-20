@@ -1,6 +1,6 @@
 //定义从后端接收的数据类型
 export interface Userinfo{
-    avatar: string
+    avatar: any
     account: string
     name: string
     sex: string

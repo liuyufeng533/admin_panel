@@ -14,7 +14,7 @@ export function login(data: { account: string; password: string }) {
 
 //用token查找用户的数据
 export function getUserByToken(token: string) {
-  return request.get('users', {
+  return request.get('/users', {
     params: {
       token: token
     }

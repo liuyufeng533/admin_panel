@@ -7,6 +7,7 @@ import LoginLog from '@/views/menu/LoginLog.vue'
 import { useUserinfoStore } from '@/store/userinfo'
 import { getUserByToken } from '@/api/login'
 import { ElMessage } from 'element-plus'
+import SystemOverview from '@/views/menu/SystemOverview.vue'
 
 const router = createRouter({
     history: createWebHashHistory(),
@@ -29,6 +30,11 @@ const router = createRouter({
                     name: 'home',
                     path: '/home',
                     component: Home
+                },
+                {
+                    name: 'systemoverview',
+                    path: '/systemoverview',
+                    component: SystemOverview
                 },
                 {
                     name: 'loginlog',

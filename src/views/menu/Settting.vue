@@ -4,13 +4,14 @@
         <div class="common-content">
             <el-tabs v-model="activeName" class="demo-tabs">
                 <el-tab-pane label="账号详情" name="first">
-                    <span>头像：</span><span>{{ form.avatar }}</span><br/>
+                    <span class="avatar">头像：</span><img :src="form.avatar" alt="头像" ref="avatarImg" class="avatarImg"><label for="avatar" class="updateAvatar">上传头像</label><br/>
+                    <input type="file" hidden id="avatar" @change="navatar">
                     <el-form label-width="60px" style="max-width: 600px" label-position="left">
                         <el-form-item label="账号：">
                             <el-input v-model="form.account" style="width: 200px"/>
                         </el-form-item>
                     </el-form>
-                    <span>密码：</span><el-button type="primary">修改密码</el-button>
+                    <span class="password">密码：</span><el-button type="primary" @click="updatePasswordDialog">修改密码</el-button>
                     <el-form label-width="60px" style="max-width: 600px" label-position="left">
                         <el-form-item label="姓名：">
                             <el-input v-model="form.name" style="width: 200px"/>
@@ -44,6 +45,7 @@
             </el-tabs>
         </div>
     </div>
+    <UpdatePassword ref="updatePassword"/>
 </template>
 
 <script lang="ts">
@@ -60,6 +62,8 @@
     import type { Userinfo } from '@/types/Userinfo';
     import { updateUser } from '@/api/user';
     import {ElMessage} from 'element-plus'
+    import UpdatePassword from '@/components/UpdatePassword.vue';
+    import { compressImage } from '@/hooks/compressImage';
 
     const activeName = ref('first')
     const items = ref({
@@ -86,10 +90,24 @@
         department: department.value,
         email: email.value,
     })
+    //点击修改密码出弹窗
+    const updatePassword = ref()
+    function updatePasswordDialog() {
+        updatePassword.value.open()
+    }
+    //定义修改头像函数
+    async function navatar(e: Event) {
+        const input = e.target as HTMLInputElement
+        console.log(input.files?.[0]);
+        const file = input.files?.[0]
+        if(!file)
+            return
+        form.avatar = await compressImage(file, 200, 0.7)//压缩图片
+    }
     //定义修改函数
     const handleSave = async() => {
         //定义索引用于对比值是否发生变化
-        const filed = ['account', 'name', 'sex', 'role', 'department', 'email', 'avatar']as const
+        const filed = ['avatar', 'account', 'name', 'sex', 'role', 'department', 'email', 'avatar']as const
         const changedData:Partial<Userinfo> = {}
         let hasChanged = false
         filed.forEach(key=>{
@@ -99,12 +117,12 @@
             }
         })
         if(hasChanged) {
-            //更新pinia中的数据
-            updateuser(changedData)
             //将更新后的数据传递给后端
             try {
                 await updateUser(userinfoStore.id, changedData)
                 ElMessage.success('保存成功')
+                //更新pinia中的数据
+                updateuser(changedData)
             }catch(err) {
                 ElMessage.error('同步到后端失败')
             }
@@ -113,14 +131,17 @@
 </script>
 
 <style lang="scss" scoped>
+
     .demo-tabs > .el-tabs__content {
         padding: 32px;
         color: #6b778c;
         font-size: 32px;
         font-weight: 600;
     }
+
+
     .common-wrapped {
-        height: calc(100vh - 90px);
+        height: calc(100vh - 120px);
         background-color: #f5f5f5;
         overflow: hidden;
         
@@ -133,5 +154,34 @@
         :deep(.el-button) {
             margin-left: 20px;
         }
+    }
+
+    .password,
+    .avatar {
+        font-weight: 300;
+        font-size: 15px;
+    }
+
+    .avatarImg {
+        margin-left: 20px;
+        margin-bottom: 20px;
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        vertical-align: middle;
+    }
+
+    .updateAvatar {
+        display: inline-block;
+        margin-left: 40px;
+        width: 100px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        font-weight: 500;
+        color: #fff;
+        font-size: 14px;
+        border-radius: 5px;
+        background-color: #409eff;
     }
 </style>
